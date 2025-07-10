@@ -130,14 +130,56 @@ st.markdown("""
 
 /* 専門分野選択見出し */
 .expert-selection-title {
-    color: #000000 !important;
+    color: #ffffff !important;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* 質問相談見出し */
 .question-title {
-    color: #2c3e50 !important;
+    color: #ffffff !important;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ラジオボタンのラベル文字色 */
+.stRadio label {
+    color: #2c3e50 !important;
+    font-weight: 500;
+}
+
+/* テキストエリアのラベル文字色 */
+.stTextArea label {
+    color: #ffffff !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 専門分野選択のラベル文字色 */
+.stRadio > div > label {
+    color: #ffffff !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 専門家選択エリア全体の背景 */
+.expert-selection-area {
+    background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 質問エリア全体の背景 */
+.question-area {
+    background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 </style>
 """, unsafe_allow_html=True)
@@ -208,7 +250,11 @@ def get_expert_advice(input_text, expert_type):
 col1, col2 = st.columns([2, 3])
 
 with col1:
-    st.markdown('<div class="expert-selection-title"><h3>🎯 専門分野を選択</h3></div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="expert-selection-area">
+        <div class="expert-selection-title"><h3>🎯 専門分野を選択</h3></div>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
     
     # 専門家の詳細情報
@@ -294,7 +340,11 @@ with col1:
         """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown('<div class="question-title"><h3>💬 ご質問・ご相談</h3></div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="question-area">
+        <div class="question-title"><h3>💬 ご質問・ご相談</h3></div>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("---")
     
     # テキスト入力エリア
