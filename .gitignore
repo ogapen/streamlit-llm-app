@@ -3,6 +3,9 @@
 .venv/
 env/
 
+# Streamlit secrets (本番環境用)
+.streamlit/secrets.toml
+
 # macOS
 .DS_Store
 .DS_Store?

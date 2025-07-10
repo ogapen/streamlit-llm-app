@@ -1,9 +1,30 @@
+import os
 from dotenv import load_dotenv
+
+# 環境変数の読み込み（ローカル開発用）
 load_dotenv()
 
 import streamlit as st
 from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
+
+# Streamlit Community Cloud用のsecrets対応
+def get_openai_api_key():
+    """OpenAI APIキーを取得する（ローカル環境とStreamlit Cloud両対応）"""
+    # Streamlit secretsから取得を試行
+    try:
+        return st.secrets["OPENAI_API_KEY"]
+    except:
+        # 環境変数から取得を試行
+        return os.getenv("OPENAI_API_KEY")
+
+# APIキーの設定
+openai_api_key = get_openai_api_key()
+if not openai_api_key:
+    st.error("⚠️ OpenAI APIキーが設定されていません。")
+    st.info("ローカル環境: .envファイルにOPENAI_API_KEYを設定してください")
+    st.info("Streamlit Cloud: SecretsでOPENAI_API_KEYを設定してください")
+    st.stop()
 
 # ページ設定
 st.set_page_config(
@@ -230,8 +251,12 @@ def get_expert_advice(input_text, expert_type):
         "環境・エネルギー専門家": "あなたは環境・エネルギー分野の専門家です。省エネルギー対策、再生可能エネルギー導入、環境アセスメント、カーボンニュートラルなど、持続可能な社会の実現に向けたアドバイスを提供します。"
     }
     
-    # LLMインスタンスを作成
-    llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.7)
+    # LLMインスタンスを作成（APIキーを明示的に指定）
+    llm = ChatOpenAI(
+        model_name="gpt-4o-mini", 
+        temperature=0.7,
+        openai_api_key=openai_api_key
+    )
     
     # メッセージを構築
     messages = [
